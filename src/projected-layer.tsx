@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Map, Point } from 'mapbox-gl';
+import { Map, Point, LngLat } from 'mapbox-gl';
 import { OverlayParams, overlayState, overlayTransform } from './util/overlays';
 import { Anchor } from './util/types';
 import { withMap } from './context';
@@ -10,7 +10,7 @@ const defaultStyle = {
 
 export interface Props {
   type: 'marker' | 'popup';
-  coordinates: [number, number];
+  coordinates: LngLat;
   anchor?: Anchor;
   offset?: number | [number, number] | Point;
   children?: JSX.Element | JSX.Element[];
@@ -61,8 +61,8 @@ export class ProjectedLayer extends React.Component<Props, OverlayParams> {
 
   private havePropsChanged(props: Props, prevProps: Props) {
     return (
-      props.coordinates[0] !== prevProps.coordinates[0] ||
-      props.coordinates[1] !== prevProps.coordinates[1] ||
+      props.coordinates.lat !== prevProps.coordinates.lat ||
+      props.coordinates.lng !== prevProps.coordinates.lng ||
       props.offset !== prevProps.offset ||
       props.anchor !== prevProps.anchor
     );
